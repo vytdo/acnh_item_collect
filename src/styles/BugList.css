@@ -45,3 +45,8 @@
   position: relative;
   top: -15px; /* Adjust the value to your liking */
 }
+
+.checkbox {
+  margin-top: 5px;
+  margin-left: 5px;
+}
