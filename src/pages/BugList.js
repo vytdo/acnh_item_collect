@@ -91,19 +91,27 @@ const BugList = () => {
               (showUncheckedBugs && !initialCheckedState[key])
             ) {
               return (
-                <div key={index} className="bug-card">
-                  <input
-                    type="checkbox"
-                    className="checkbox"
-                    defaultChecked={initialCheckedState[key] || false}
-                    onChange={(e) => handleCheckboxChange(e, key)}
-                  />
-                  <img
-                    src={bugs[key].icon_uri}
-                    alt={bugs[key].name['name-USen']}
-                  />
-                  <p className="bug-name">{bugs[key].name['name-USen']}</p>
-                  <p className="bug-price">{bugs[key].price}</p>
+                <div>
+                  <div
+                    key={index}
+                    className="bug-card"
+                    data-name={bugs[key].name['name-USen']}
+                    data-price={bugs[key].price}
+                  >
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      defaultChecked={initialCheckedState[key] || false}
+                      onChange={(e) => handleCheckboxChange(e, key)}
+                    />
+                    <img
+                      src={bugs[key].icon_uri}
+                      alt={bugs[key].name['name-USen']}
+                    />
+
+                    <div>{bugs[key].price} Bells</div>
+                    <div>{bugs[key].name['name-USen']}</div>
+                  </div>
                 </div>
               );
             }
