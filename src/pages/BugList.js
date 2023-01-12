@@ -6,6 +6,7 @@ const BugList = () => {
   const [collectedBugsCount, setCollectedBugsCount] = useState(
     JSON.parse(localStorage.getItem('collectedBugsCount')) || 0
   );
+  const [showCheckedBugs, setShowCheckedBugs] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(
@@ -49,26 +50,41 @@ const BugList = () => {
     );
   };
 
+  const handleShowCheckedBugs = () => {
+    setShowCheckedBugs(!showCheckedBugs);
+  };
+
   return (
     <div>
       <h2>Bugs</h2>
+      <button onClick={handleShowCheckedBugs}>
+        {showCheckedBugs ? 'Show All Bugs' : 'Show Only Checked Bugs'}
+      </button>
       <p>Total Bugs: {Object.keys(bugs).length}</p>
       <p>Collected Bugs: {collectedBugsCount}</p>
       {Object.keys(bugs).length ? (
         <div className="bug-container">
-          {Object.keys(bugs).map((key, index) => (
-            <div key={index} className="bug-card">
-              <input
-                type="checkbox"
-                className="checkbox"
-                defaultChecked={initialCheckedState[key] || false}
-                onChange={(e) => handleCheckboxChange(e, key)}
-              />
-              <img src={bugs[key].icon_uri} alt={bugs[key].name['name-USen']} />
-              <p className="bug-name">{bugs[key].name['name-USen']}</p>
-              <p className="bug-price">{bugs[key].price}</p>
-            </div>
-          ))}
+          {Object.keys(bugs).map((key, index) => {
+            if (!showCheckedBugs || initialCheckedState[key]) {
+              return (
+                <div key={index} className="bug-card">
+                  <input
+                    type="checkbox"
+                    className="checkbox"
+                    defaultChecked={initialCheckedState[key] || false}
+                    onChange={(e) => handleCheckboxChange(e, key)}
+                  />
+                  <img
+                    src={bugs[key].icon_uri}
+                    alt={bugs[key].name['name-USen']}
+                  />
+                  <p className="bug-name">{bugs[key].name['name-USen']}</p>
+                  <p className="bug-price">{bugs[key].price}</p>
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
       ) : (
         <p>Loading...</p>
