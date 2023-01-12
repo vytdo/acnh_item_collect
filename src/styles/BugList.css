@@ -1,0 +1,47 @@
+.bug-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.bug-card {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  padding-right: 1rem;
+  z-index: 1;
+}
+
+.bug-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  background-color: #ffcccc;
+
+  border-bottom-left-radius: 10px; /* Adjust the value to your liking */
+  border-bottom-right-radius: 10px;
+}
+.bug-card img {
+  width: 80%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.bug-name {
+  z-index: 2;
+  font-size: 20px;
+  position: relative;
+  top: -15px; /* Adjust the value to your liking */
+}
