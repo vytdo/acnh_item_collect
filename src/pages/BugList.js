@@ -3,7 +3,22 @@ import '../styles/BugList.css';
 
 const BugList = () => {
   const [bugs, setBugs] = useState([]);
-  const [collectedBugsCount, setCollectedBugsCount] = useState(0);
+  const [collectedBugsCount, setCollectedBugsCount] = useState(
+    JSON.parse(localStorage.getItem('collectedBugsCount')) || 0
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      'collectedBugsCount',
+      JSON.stringify(collectedBugsCount)
+    );
+    return () => {
+      localStorage.setItem(
+        'collectedBugsCount',
+        JSON.stringify(collectedBugsCount)
+      );
+    };
+  }, [collectedBugsCount]);
 
   useEffect(() => {
     fetch('http://acnhapi.com/v1/bugs')
@@ -37,6 +52,7 @@ const BugList = () => {
   return (
     <div>
       <h2>Bugs</h2>
+      <p>Total Bugs: {Object.keys(bugs).length}</p>
       <p>Collected Bugs: {collectedBugsCount}</p>
       {Object.keys(bugs).length ? (
         <div className="bug-container">
