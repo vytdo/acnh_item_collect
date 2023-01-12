@@ -7,6 +7,7 @@ const BugList = () => {
     JSON.parse(localStorage.getItem('collectedBugsCount')) || 0
   );
   const [showCheckedBugs, setShowCheckedBugs] = useState(false);
+  const [showUncheckedBugs, setShowUncheckedBugs] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(
@@ -52,6 +53,12 @@ const BugList = () => {
 
   const handleShowCheckedBugs = () => {
     setShowCheckedBugs(!showCheckedBugs);
+    setShowUncheckedBugs(false);
+  };
+
+  const handleShowUncheckedBugs = () => {
+    setShowUncheckedBugs(!showUncheckedBugs);
+    setShowCheckedBugs(false);
   };
 
   return (
@@ -60,12 +67,19 @@ const BugList = () => {
       <button onClick={handleShowCheckedBugs}>
         {showCheckedBugs ? 'Show All Bugs' : 'Show Only Checked Bugs'}
       </button>
+      <button onClick={handleShowUncheckedBugs}>
+        {showUncheckedBugs ? 'Show All Bugs' : 'Show Only Unchecked Bugs'}
+      </button>
       <p>Total Bugs: {Object.keys(bugs).length}</p>
       <p>Collected Bugs: {collectedBugsCount}</p>
       {Object.keys(bugs).length ? (
         <div className="bug-container">
           {Object.keys(bugs).map((key, index) => {
-            if (!showCheckedBugs || initialCheckedState[key]) {
+            if (
+              (!showCheckedBugs && !showUncheckedBugs) ||
+              (showCheckedBugs && initialCheckedState[key]) ||
+              (showUncheckedBugs && !initialCheckedState[key])
+            ) {
               return (
                 <div key={index} className="bug-card">
                   <input
