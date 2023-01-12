@@ -8,6 +8,7 @@ const BugList = () => {
   );
   const [showCheckedBugs, setShowCheckedBugs] = useState(false);
   const [showUncheckedBugs, setShowUncheckedBugs] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     localStorage.setItem(
@@ -61,9 +62,14 @@ const BugList = () => {
     setShowCheckedBugs(false);
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <div>
       <h2>Bugs</h2>
+      <input type="text" placeholder="Search" onChange={handleSearch} />
       <button onClick={handleShowCheckedBugs}>
         {showCheckedBugs ? 'Show All Bugs' : 'Show Only Checked Bugs'}
       </button>
@@ -76,7 +82,11 @@ const BugList = () => {
         <div className="bug-container">
           {Object.keys(bugs).map((key, index) => {
             if (
-              (!showCheckedBugs && !showUncheckedBugs) ||
+              (!showCheckedBugs &&
+                !showUncheckedBugs &&
+                bugs[key].name['name-USen']
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())) ||
               (showCheckedBugs && initialCheckedState[key]) ||
               (showUncheckedBugs && !initialCheckedState[key])
             ) {
