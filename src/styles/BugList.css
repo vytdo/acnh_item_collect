@@ -1,7 +1,7 @@
 .bug-card {
+  position: relative;
   background-color: white;
   border-radius: 15px;
-  box-shadow: 2px 2px 15px #ccc;
   width: 300px;
   height: 300px;
   display: flex;
@@ -9,6 +9,7 @@
   align-items: center;
   margin: 20px;
   padding: 20px;
+  z-index: 1;
 }
 
 .bug-card img {
@@ -27,8 +28,27 @@
   margin-bottom: 10px;
 }
 
+.bug-name,
+.bug-price {
+  z-index: 2; /* This will make the bug-name on top */
+  /* other properties */
+}
+
 .bug-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
+}
+
+.bug-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  background-color: #f9f3f0;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: 2px 2px 15px #ccc;
 }

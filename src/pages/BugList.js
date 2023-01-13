@@ -71,10 +71,10 @@ const BugList = () => {
       <h2>Bugs</h2>
       <input type="text" placeholder="Search" onChange={handleSearch} />
       <button onClick={handleShowCheckedBugs}>
-        {showCheckedBugs ? 'Show All Bugs' : 'Show Only Checked Bugs'}
+        {showCheckedBugs ? 'Show All Bugs' : 'All Collected Bugs'}
       </button>
       <button onClick={handleShowUncheckedBugs}>
-        {showUncheckedBugs ? 'Show All Bugs' : 'Show Only Unchecked Bugs'}
+        {showUncheckedBugs ? 'Show All Bugs' : 'Uncollected Bugs'}
       </button>
       <p>Total Bugs: {Object.keys(bugs).length}</p>
       <p>Collected Bugs: {collectedBugsCount}</p>
@@ -109,8 +109,10 @@ const BugList = () => {
                       alt={bugs[key].name['name-USen']}
                     />
 
-                    <div>{bugs[key].price} Bells</div>
-                    <div>{bugs[key].name['name-USen']}</div>
+                    <div className="bug-price">{bugs[key].price} Bells</div>
+                    <div className="bug-name">
+                      {bugs[key].name['name-USen']}
+                    </div>
                   </div>
                 </div>
               );
